@@ -1,0 +1,63 @@
+﻿HPE ProLiant SNMP-Healthcheck  -  #Powerscripting  -  Version 2.1
+============================================================================
+
+Zweck
+-----
+Kompletter SNMP-Walk eines oder mehrerer HPE ProLiant Server (über das iLO)
+und Auswertung aller Hardware-Statuswerte. Fehler und Warnungen werden farbig
+aufgelistet, zusätzlich wird je Server ein HTML-Bericht erstellt.
+
+Projektseite: https://github.com/Qu3ntyn83/hpe-snmp-healthcheck
+
+Geprüft werden u. a.: Gesamt-Health, Temperatursensoren, Lüfter, Netzteile
+inkl. Redundanz, Arbeitsspeicher, Prozessoren, IML, Smart-Array-Controller,
+Cache und Batterie, logische Laufwerke, physische Disks inkl. S.M.A.R.T.
+sowie alle HPE-Subsysteme (iLO, NIC, SAS, Fibre Channel ...).
+
+Voraussetzungen
+---------------
+- Windows 10/11 oder Windows Server 2012 R2 und neuer
+- Keine Installation, keine Zusatzmodule, keine Admin-Rechte
+- Netzwerkzugriff UDP 161 auf das iLO
+- SNMP im iLO aktiviert
+- Gen10 und neuer: AMS (Agentless Management Service) im Betriebssystem
+  installiert, sonst liefert das iLO nur eingeschränkte Werte
+
+Bedienung
+---------
+1. ZIP entpacken (z. B. nach C:\Temp\hpe-snmp-healthcheck)
+2. HPE-SNMP-Healthcheck.cmd doppelklicken
+3. iLO-IP(s) eintragen (mehrere mit Komma), Kunde, SNMP-Version und
+   Community bzw. SNMPv3-Zugangsdaten
+4. "Walk starten"
+
+Reiter "Befunde"        nur Fehler und Warnungen, gruppiert je Server
+Reiter "Alle Werte"     alle geprüften Statuswerte inkl. OK
+Reiter "Protokoll"      Ablauf, Systeminfos, Dateipfade
+Doppelklick auf eine Zeile öffnet den HTML-Bericht des Servers.
+Rechtsklick > "Markierte Zeilen kopieren" für Tickets / E-Mails.
+
+"Walk-Datei auswerten" wertet vorhandene Walk-Dateien erneut aus
+(auch von net-snmp im Format snmpwalk -On -Oq).
+
+Ergebnisse (Ordner "Reports" neben dem Tool, sonst Dokumente\HPE-SNMP-Reports):
+  walk_<host>_<zeit>.txt     kompletter Walk (Rohdaten)
+  report_<host>_<zeit>.txt   Auswertung als Text
+  report_<host>_<zeit>.html  Bericht für den Kunden
+
+Kommandozeile (Automatisierung / Monitoring)
+--------------------------------------------
+  HPE-SNMP-Healthcheck.cmd -Target 10.0.10.21,10.0.10.22 -Community public -Customer "Muster GmbH"
+  HPE-SNMP-Healthcheck.cmd -Target ilo-srv01 -Version 3 -User monitor -AuthPassword "xxx" -PrivPassword "yyy"
+  HPE-SNMP-Healthcheck.cmd -AnalyzeFile .\Reports\walk_10.0.10.21_20261030-124500.txt
+Exit-Codes: 0 = OK, 1 = Warnung, 2 = Kritisch, 3 = Fehler
+
+Hinweise
+--------
+- ZIP aus E-Mail/Internet: vor dem Entpacken Rechtsklick > Eigenschaften >
+  "Zulassen" anhaken.
+- Bei AppLocker / Constrained Language Mode kann der Start blockiert sein
+  (Meldung erscheint) - dann von einem Techniker-PC ausführen.
+- Ein Server mit nur einem Netzteil meldet bewusst "nicht redundant".
+- Eine IML-Warnung bleibt bestehen, bis die Einträge im iLO als repariert
+  markiert bzw. gelöscht wurden.
