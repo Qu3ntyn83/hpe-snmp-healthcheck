@@ -1,5 +1,7 @@
 # HPE ProLiant SNMP-Healthcheck
 
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-unterst%C3%BCtzen-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/quentyn83)
+
 Liest den Hardware-Status von HPE ProLiant Servern über das iLO per SNMP aus und zeigt am Ende alle Werte, die auf **Fehler** oder **Warnung** stehen. Es gibt das Tool in zwei Varianten:
 
 - **Windows:** grafische Oberfläche, ohne Installation und ohne Zusatzmodule
@@ -87,6 +89,12 @@ Beide Varianten liefern Nagios-/Icinga-kompatible Exit-Codes:
 - Ein Server mit nur einem Netzteil meldet bewusst „nicht redundant“.
 - Eine IML-Warnung bleibt stehen, bis die Einträge im iLO als repariert markiert oder gelöscht wurden.
 - Bei aktivem AppLocker oder Constrained Language Mode kann das Kompilieren der SNMP-Engine (`Add-Type`) gesperrt sein.
+
+## Unterstützen
+
+Wenn dir das Projekt hilft und du mir einen Kaffee ausgeben möchtest, freue ich mich sehr:
+
+<a href="https://buymeacoffee.com/quentyn83"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" height="45"></a>
 
 ## Lizenz
 
